@@ -1,48 +1,36 @@
 package org.example.nomemientan.domain.juego;
 
 import co.com.sofka.domain.generic.EventChange;
-import org.example.nomemientan.domain.juego.events.*;
+import org.example.nomemientan.domain.juego.events.JuegoCreado;
+import org.example.nomemientan.domain.juego.events.JuegoInicializado;
+import org.example.nomemientan.domain.juego.events.JugadorAdicionado;
 
+import java.util.HashMap;
 
 
 public class JuegoChange extends EventChange {
-    public JuegoChange(Juego juego){
+    public JuegoChange(Juego juego) {
 
         apply((JuegoCreado event) -> {
-            juego.jugadores = event.getJugadores();
-            juego.juegoIniciado = Boolean.FALSE;
-            juego.tieneGanador = Boolean.FALSE;
+            juego.juegoInicializado = Boolean.FALSE;
+            juego.jugadores = new HashMap<>();
         });
 
-        apply((AcumuladoACapitalAsignado event) -> {
-            juego.jugadores.get(event.getJugadorId())
-                    .aumentarCapital(event.getValue());
+        apply((JuegoInicializado event) -> {
+            juego.juegoInicializado = Boolean.TRUE;
         });
 
-        apply((JuegoIniciado event) -> {
-            if(Boolean.TRUE.equals(juego.juegoIniciado)){
-                throw new IllegalArgumentException("El juego ya esta inicializado");
+        apply((JugadorAdicionado event) -> {
+            if (juego.juegoInicializado.equals(Boolean.TRUE)) {
+                throw new IllegalArgumentException("No se puede crear un nuevo jugador si el juego esta en marcha");
             }
-            juego.juegoIniciado = Boolean.TRUE;
-        });
-
-        apply((JugadoresEliminados event) -> {
-            event.getJugadoresIds()
-                    .forEach(jugadorId -> juego.jugadores.remove(jugadorId));
-        });
-
-        apply((NuevaRondaCreada event) -> {
-            if(Boolean.FALSE.equals(juego.juegoIniciado)){
-                throw new IllegalArgumentException("El juego debe estar inicializado");
-            }
-            if(Boolean.TRUE.equals(juego.tieneGanador)){
-                throw new IllegalArgumentException("El juego ya tiene un ganador");
-            }
-            juego.rondaId = event.getRondaId();
-        });
-
-        apply((JuegoFinalizadoConGanador event) -> {
-            juego.tieneGanador = true;
+            juego.jugadores.put(event.getJugadorId(),
+                    new Jugador(
+                            event.getJugadorId(),
+                            event.getNombre(),
+                            event.getCapital()
+                    )
+            );
         });
     }
 }

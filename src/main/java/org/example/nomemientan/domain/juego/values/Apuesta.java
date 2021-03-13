@@ -4,10 +4,10 @@ import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Objects;
 
-public class Apusta implements ValueObject<Integer> {
+public class Apuesta implements ValueObject<Integer> {
     private final Integer value;
 
-    public Apusta(Integer value) {
+    public Apuesta(Integer value) {
         this.value = Objects.requireNonNull(value);
     }
 

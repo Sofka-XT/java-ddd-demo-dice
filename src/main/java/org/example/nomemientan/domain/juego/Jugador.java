@@ -4,23 +4,17 @@ package org.example.nomemientan.domain.juego;
 import co.com.sofka.domain.generic.Entity;
 import org.example.nomemientan.domain.juego.values.Capital;
 import org.example.nomemientan.domain.juego.values.JugadorId;
-import org.example.nomemientan.domain.juego.values.Name;
+import org.example.nomemientan.domain.juego.values.Nombre;
 
 public class Jugador extends Entity<JugadorId> {
 
-    private final Name name;
+    private final Nombre nombre;
     private Capital capital;
 
-    public Jugador(JugadorId entityId, Name name, Capital capital) {
+    public Jugador(JugadorId entityId, Nombre nombre, Capital capital) {
         super(entityId);
-        this.name = name;
+        this.nombre = nombre;
         this.capital = capital;
-    }
-
-    public Jugador(JugadorId entityId, Name name) {
-        super(entityId);
-        this.name = name;
-        this.capital = new Capital(0);
     }
 
     public void aumentarCapital(Integer valor) {
@@ -31,7 +25,7 @@ public class Jugador extends Entity<JugadorId> {
         return capital;
     }
 
-    public Name name() {
-        return name;
+    public Nombre nombre() {
+        return nombre;
     }
 }

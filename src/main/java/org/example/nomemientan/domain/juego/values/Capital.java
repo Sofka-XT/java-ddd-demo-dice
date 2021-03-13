@@ -9,13 +9,13 @@ public class Capital implements ValueObject<Integer> {
 
     public Capital(Integer value) {
         this.value = Objects.requireNonNull(value);
-        if(value < 0){
+        if (value < 0) {
             throw new IllegalArgumentException("El valor del capital no puede ser negativo");
         }
     }
 
 
-    public Capital aumentar(Integer value){
+    public Capital aumentar(Integer value) {
         return new Capital(this.value + value);
     }
 

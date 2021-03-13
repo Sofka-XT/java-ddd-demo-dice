@@ -4,12 +4,12 @@ import co.com.sofka.domain.generic.ValueObject;
 
 import java.util.Objects;
 
-public class Name implements ValueObject<String> {
+public class Nombre implements ValueObject<String> {
     private final String value;
 
-    public Name(String name) {
+    public Nombre(String name) {
         this.value = Objects.requireNonNull(name);
-        if(name.isBlank()){
+        if (name.isBlank()) {
             throw new IllegalArgumentException("El nombre no puede esta vacio");
         }
     }

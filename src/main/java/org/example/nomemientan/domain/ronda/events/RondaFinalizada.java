@@ -5,6 +5,7 @@ import org.example.nomemientan.domain.juego.values.JuegoId;
 
 public class RondaFinalizada extends DomainEvent {
     private final JuegoId juegoId;
+
     public RondaFinalizada(JuegoId juegoId) {
         super("nomemientan.ronda.rondafinalizada");
         this.juegoId = juegoId;
