@@ -1,4 +1,4 @@
-package org.example.nomemientan.usecase;
+package org.example.nomemientan.usecase.juego;
 
 import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.business.generic.UseCaseHandler;
@@ -19,7 +19,7 @@ import java.util.Objects;
 class CrearJuegoUseCaseTest {
 
     @Test
-    void crearUnJuego(){
+    void crearUnJuego() {
         var nombres = Map.of(
                 JugadorId.of("xxxxx"), new Nombre("Raul Alzate"),
                 JugadorId.of("ffff"), new Nombre("Andres Alzate")
@@ -36,9 +36,9 @@ class CrearJuegoUseCaseTest {
                 .orElseThrow()
                 .getDomainEvents();
 
-        var juegoCreado = (JuegoCreado)events.get(0);
-        var jugadorAdicionadoParaRaul = (JugadorAdicionado)events.get(2);
-        var jugadorAdicionadoParaAndres = (JugadorAdicionado)events.get(1);
+        var juegoCreado = (JuegoCreado) events.get(0);
+        var jugadorAdicionadoParaRaul = (JugadorAdicionado) events.get(2);
+        var jugadorAdicionadoParaAndres = (JugadorAdicionado) events.get(1);
 
         Assertions.assertTrue(Objects.nonNull(juegoCreado.getJuegoId().value()));
 
@@ -54,7 +54,7 @@ class CrearJuegoUseCaseTest {
 
 
     @Test
-    void errorAlCrearJuego(){
+    void errorAlCrearJuego() {
         var nombres = Map.of(
                 JugadorId.of("xxxxx"), new Nombre("Raul Alzate")
         );

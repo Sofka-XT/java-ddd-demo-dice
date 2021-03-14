@@ -5,13 +5,15 @@ import co.com.sofka.domain.generic.Entity;
 import org.example.nomemientan.domain.ronda.values.Cara;
 import org.example.nomemientan.domain.ronda.values.DadoId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dado extends Entity<DadoId> {
-    private List<Cara> caras;
+    private final List<Cara> caras;
 
     public Dado(DadoId entityId) {
         super(entityId);
+        this.caras = new ArrayList<>();
     }
 
     public void lanzarDado() {
@@ -19,5 +21,9 @@ public class Dado extends Entity<DadoId> {
             var numero = (int) ((Math.random() * 6) + 1);
             caras.add(new Cara(numero));
         }
+    }
+
+    public List<Cara> caras() {
+        return caras;
     }
 }

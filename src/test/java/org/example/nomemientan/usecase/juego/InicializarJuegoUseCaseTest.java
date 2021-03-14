@@ -1,4 +1,4 @@
-package org.example.nomemientan.usecase;
+package org.example.nomemientan.usecase.juego;
 
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
@@ -20,8 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +29,7 @@ class InicializarJuegoUseCaseTest {
     private DomainEventRepository repository;
 
     @Test
-    void inicializarJuego(){
+    void inicializarJuego() {
         var id = JuegoId.of("xxxx");
         var command = new InicializarJuego(id);
         var useCase = new InicializarJuegoUseCase();
@@ -45,7 +43,7 @@ class InicializarJuegoUseCaseTest {
                 .orElseThrow()
                 .getDomainEvents();
 
-        var juegoInicializado = (JuegoInicializado)events.get(0);
+        var juegoInicializado = (JuegoInicializado) events.get(0);
         Assertions.assertEquals(3, juegoInicializado.getJugadoresIds().size());
 
     }

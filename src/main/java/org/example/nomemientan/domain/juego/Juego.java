@@ -6,7 +6,10 @@ import org.example.nomemientan.domain.juego.events.JuegoCreado;
 import org.example.nomemientan.domain.juego.events.JuegoInicializado;
 import org.example.nomemientan.domain.juego.events.JugadorAdicionado;
 import org.example.nomemientan.domain.juego.factory.JugadorFactory;
-import org.example.nomemientan.domain.juego.values.*;
+import org.example.nomemientan.domain.juego.values.Capital;
+import org.example.nomemientan.domain.juego.values.JuegoId;
+import org.example.nomemientan.domain.juego.values.JugadorId;
+import org.example.nomemientan.domain.juego.values.Nombre;
 import org.example.nomemientan.domain.ronda.values.RondaId;
 
 import java.util.List;

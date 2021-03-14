@@ -9,7 +9,7 @@ public class Cara implements ValueObject<Integer> {
 
     public Cara(Integer value) {
         this.value = Objects.requireNonNull(value, "El valor de la cara es requerida");
-        if (value < 0 || 6 > value) {
+        if (value <= 0 || 6 < value) {
             throw new IllegalArgumentException("Ojo es necesario que este entre 1-6 la cara del dado");
         }
     }

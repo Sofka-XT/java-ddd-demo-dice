@@ -1,4 +1,4 @@
-package org.example.nomemientan.usecase;
+package org.example.nomemientan.usecase.ronda;
 
 
 import co.com.sofka.business.generic.BusinessException;
@@ -15,7 +15,7 @@ import java.util.Set;
 class CrearRondaInicalUseCaseTest {
 
     @Test
-    void crearRonda(){
+    void crearRonda() {
         var event = new JuegoInicializado(Set.of(JugadorId.of("xxx"), JugadorId.of("fff")));
         event.setAggregateRootId("hhhhhh");
         var useCase = new CrearRondaInicalUseCase();
@@ -26,18 +26,18 @@ class CrearRondaInicalUseCaseTest {
                 .orElseThrow()
                 .getDomainEvents();
 
-        var rondaCreada = (RondaCreada)events.get(0);
+        var rondaCreada = (RondaCreada) events.get(0);
         Assertions.assertEquals("hhhhhh", rondaCreada.getJuegoId().value());
         Assertions.assertEquals(2, rondaCreada.getJugadorIds().size());
     }
 
     @Test
-    void rondaConError(){
+    void rondaConError() {
         var event = new JuegoInicializado(Set.of(JugadorId.of("xxx")));
         event.setAggregateRootId("hhhhhh");
         var useCase = new CrearRondaInicalUseCase();
 
-        Assertions.assertThrows(BusinessException.class, () ->  UseCaseHandler
+        Assertions.assertThrows(BusinessException.class, () -> UseCaseHandler
                 .getInstance()
                 .syncExecutor(useCase, new TriggeredEvent<>(event))
                 .orElseThrow(), "No se puede crear la ronda por falta de jugadores");
