@@ -8,10 +8,12 @@ import org.example.nomemientan.domain.ronda.events.DadosLanzados;
 import org.example.nomemientan.domain.ronda.events.EtapaCreada;
 import org.example.nomemientan.domain.ronda.events.RondaCreada;
 import org.example.nomemientan.domain.ronda.events.RondaInicializada;
+import org.example.nomemientan.domain.ronda.values.Cara;
 import org.example.nomemientan.domain.ronda.values.DadoId;
 import org.example.nomemientan.domain.ronda.values.EtapaId;
 import org.example.nomemientan.domain.ronda.values.RondaId;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,7 +57,8 @@ public class Ronda extends AggregateEvent<RondaId> {
         appendChange(new DadosLanzados(juegoId, carasList)).apply();
     }
 
-    public void crearEtapa() {
-        appendChange(new EtapaCreada(juegoId, new EtapaId())).apply();
+    public void crearEtapaInicial() {
+        List<Cara> carasVisibles = new ArrayList<>();
+        appendChange(new EtapaCreada(juegoId, EtapaId.of(1), carasVisibles)).apply();
     }
 }

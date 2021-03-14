@@ -27,7 +27,9 @@ public class RondaChange extends EventChange {
         });
 
         apply((EtapaCreada event) -> {
-            ronda.etapas.put(event.getEtapaId(), new Etapa(event.getEtapaId()));
+            ronda.etapas.put(event.getEtapaId(),
+                    new Etapa(event.getEtapaId(), event.getCarasVisibles())
+            );
         });
     }
 }

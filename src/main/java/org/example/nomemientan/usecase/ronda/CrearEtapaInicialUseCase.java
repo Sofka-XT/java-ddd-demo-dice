@@ -13,7 +13,7 @@ public class CrearEtapaInicialUseCase extends UseCase<TriggeredEvent<DadosLanzad
         var event = input.getDomainEvent();
         var ronda = Ronda.from(RondaId.of(event.aggregateRootId()), retrieveEvents());
 
-        ronda.crearEtapa();
+        ronda.crearEtapaInicial();
 
         emit().onResponse(new ResponseEvents(ronda.getUncommittedChanges()));
     }

@@ -46,6 +46,7 @@ class CrearEtapaInicialUseCaseTest {
         var etapaCreada = (EtapaCreada) events.get(0);
 
         Assertions.assertEquals(juegoId, etapaCreada.getJuegoId());
+        Assertions.assertEquals(0, etapaCreada.getCarasVisibles().size());
         Assertions.assertTrue(Objects.nonNull(etapaCreada.getEtapaId()));
     }
 
