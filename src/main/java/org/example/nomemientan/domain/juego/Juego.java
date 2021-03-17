@@ -2,14 +2,11 @@ package org.example.nomemientan.domain.juego;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
-import org.example.nomemientan.domain.juego.events.JuegoCreado;
-import org.example.nomemientan.domain.juego.events.JuegoInicializado;
-import org.example.nomemientan.domain.juego.events.JugadorAdicionado;
+import org.example.nomemientan.domain.juego.events.*;
 import org.example.nomemientan.domain.juego.factory.JugadorFactory;
-import org.example.nomemientan.domain.juego.values.Capital;
-import org.example.nomemientan.domain.juego.values.JuegoId;
-import org.example.nomemientan.domain.juego.values.JugadorId;
-import org.example.nomemientan.domain.juego.values.Nombre;
+import org.example.nomemientan.domain.juego.values.*;
+import org.example.nomemientan.domain.ronda.values.Case;
+import org.example.nomemientan.domain.ronda.values.EtapaId;
 import org.example.nomemientan.domain.ronda.values.RondaId;
 
 import java.util.List;
@@ -19,7 +16,6 @@ public class Juego extends AggregateEvent<JuegoId> {
 
     protected Boolean juegoInicializado;
     protected Map<JugadorId, Jugador> jugadores;
-    protected RondaId rondaId;
 
 
     public Juego(JuegoId entityId, JugadorFactory jugadorFactory) {
@@ -49,12 +45,18 @@ public class Juego extends AggregateEvent<JuegoId> {
         appendChange(new JuegoInicializado(jugadoresIds)).apply();
     }
 
-    public RondaId rondaId() {
-        return rondaId;
+    public void deducirCapitalDelJugador(JugadorId jugadorId, Apuesta apuesta) {
+        appendChange(new CapitalDeducidoDelJugador(jugadorId, apuesta)).apply();
     }
 
-    public Boolean isJegoInicializado() {
+
+    public void casarApuestaEnEtapa(JugadorId jugadorId, RondaId rondaId, EtapaId etapaId,  Case aCase) {
+        appendChange(new AputestaYAdivinanzaCasada(jugadorId, rondaId, etapaId, aCase)).apply();
+    }
+
+
+
+    public Boolean isJuegoInicializado() {
         return juegoInicializado;
     }
-
 }

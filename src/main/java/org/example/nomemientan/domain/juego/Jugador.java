@@ -21,6 +21,10 @@ public class Jugador extends Entity<JugadorId> {
         this.capital = this.capital.aumentar(valor);
     }
 
+    public void disminuirCapital(Integer valor) {
+        this.capital = this.capital.disminuir(valor);
+    }
+
     public Capital capital() {
         return capital;
     }

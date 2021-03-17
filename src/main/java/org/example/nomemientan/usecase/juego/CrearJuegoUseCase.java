@@ -11,6 +11,9 @@ import org.example.nomemientan.domain.juego.values.JuegoId;
 
 
 public class CrearJuegoUseCase extends UseCase<RequestCommand<CrearJuego>, ResponseEvents> {
+
+    public static final int CATINDAD_PERMITIDA_DE_JUGADORES = 2;
+
     @Override
     public void executeUseCase(RequestCommand<CrearJuego> input) {
         var command = input.getCommand();
@@ -23,7 +26,7 @@ public class CrearJuegoUseCase extends UseCase<RequestCommand<CrearJuego>, Respo
                                 jugadorId, nombre, command.getCapitales().get(jugadorId)
                         ));
 
-        if (factory.jugadores().size() < 2) {
+        if (factory.jugadores().size() < CATINDAD_PERMITIDA_DE_JUGADORES) {
             throw new BusinessException(juegoId.value(), "No se puede crear el juego por que no tiene la cantidad necesaria de jugadores");
         }
 

@@ -1,6 +1,7 @@
 package org.example.nomemientan.domain.juego;
 
 import co.com.sofka.domain.generic.EventChange;
+import org.example.nomemientan.domain.juego.events.CapitalDeducidoDelJugador;
 import org.example.nomemientan.domain.juego.events.JuegoCreado;
 import org.example.nomemientan.domain.juego.events.JuegoInicializado;
 import org.example.nomemientan.domain.juego.events.JugadorAdicionado;
@@ -31,6 +32,11 @@ public class JuegoChange extends EventChange {
                             event.getCapital()
                     )
             );
+        });
+
+        apply((CapitalDeducidoDelJugador event) -> {
+            juego.jugadores.get(event.getJugadorId())
+                    .disminuirCapital(event.getApuesta().value());
         });
     }
 }

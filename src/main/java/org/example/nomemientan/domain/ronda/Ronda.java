@@ -4,19 +4,14 @@ import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.example.nomemientan.domain.juego.values.JuegoId;
 import org.example.nomemientan.domain.juego.values.JugadorId;
-import org.example.nomemientan.domain.ronda.events.DadosLanzados;
-import org.example.nomemientan.domain.ronda.events.EtapaCreada;
-import org.example.nomemientan.domain.ronda.events.RondaCreada;
-import org.example.nomemientan.domain.ronda.events.RondaInicializada;
-import org.example.nomemientan.domain.ronda.values.Cara;
-import org.example.nomemientan.domain.ronda.values.DadoId;
-import org.example.nomemientan.domain.ronda.values.EtapaId;
-import org.example.nomemientan.domain.ronda.values.RondaId;
+import org.example.nomemientan.domain.ronda.events.*;
+import org.example.nomemientan.domain.ronda.values.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Ronda extends AggregateEvent<RondaId> {
@@ -57,8 +52,12 @@ public class Ronda extends AggregateEvent<RondaId> {
         appendChange(new DadosLanzados(juegoId, carasList)).apply();
     }
 
+    public void realizarCasePorJugador(JugadorId jugadorId, EtapaId etapaId, Case aCase){
+        appendChange(new CaseRealizadoDelJugador(juegoId, etapaId, jugadorId, aCase)).apply();
+    }
+
     public void crearEtapaInicial() {
         List<Cara> carasVisibles = new ArrayList<>();
-        appendChange(new EtapaCreada(juegoId, EtapaId.of(1), carasVisibles)).apply();
+        appendChange(new EtapaCreada(juegoId, jugadorIds, EtapaId.of(1), carasVisibles)).apply();
     }
 }

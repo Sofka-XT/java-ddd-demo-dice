@@ -22,7 +22,7 @@ public class Etapa extends Entity<EtapaId> {
         carasVisibles.add(cara);
     }
 
-    public void aggregarCases(JugadorId jugadorId, Case aCase) {
+    public void aggregarCase(JugadorId jugadorId, Case aCase) {
         this.cases.put(jugadorId, aCase);
     }
 

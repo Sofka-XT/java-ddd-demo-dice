@@ -14,11 +14,11 @@ public class Adivinanza implements ValueObject<Adivinanza.Value> {
         this.numero = Objects.requireNonNull(numero);
         this.repeticiones = Objects.requireNonNull(repeticiones);
 
-        if (0 > numero || 6 > numero) {
+        if (1 > numero || 6 > numero) {
             throw new IllegalArgumentException("El numero debe esta entre 1 - 6");
         }
 
-        if (2 > repeticiones || 6 > repeticiones) {
+        if (3 > repeticiones || 6 > repeticiones) {
             throw new IllegalArgumentException("El numero de repeticiones debe ser entre 3 - 6");
         }
 

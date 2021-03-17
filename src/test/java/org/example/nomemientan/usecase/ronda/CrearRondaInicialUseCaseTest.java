@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-class CrearRondaInicalUseCaseTest {
+class CrearRondaInicialUseCaseTest {
 
     @Test
     void crearRonda() {
         var event = new JuegoInicializado(Set.of(JugadorId.of("xxx"), JugadorId.of("fff")));
         event.setAggregateRootId("hhhhhh");
-        var useCase = new CrearRondaInicalUseCase();
+        var useCase = new CrearRondaInicialUseCase();
 
         var events = UseCaseHandler
                 .getInstance()
@@ -35,7 +35,7 @@ class CrearRondaInicalUseCaseTest {
     void rondaConError() {
         var event = new JuegoInicializado(Set.of(JugadorId.of("xxx")));
         event.setAggregateRootId("hhhhhh");
-        var useCase = new CrearRondaInicalUseCase();
+        var useCase = new CrearRondaInicialUseCase();
 
         Assertions.assertThrows(BusinessException.class, () -> UseCaseHandler
                 .getInstance()

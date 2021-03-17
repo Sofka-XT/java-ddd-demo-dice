@@ -19,6 +19,10 @@ public class Capital implements ValueObject<Integer> {
         return new Capital(this.value + value);
     }
 
+    public Capital disminuir(Integer value) {
+        return new Capital(this.value - value);
+    }
+
     @Override
     public Integer value() {
         return value;

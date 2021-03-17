@@ -1,6 +1,7 @@
 package org.example.nomemientan.domain.ronda;
 
 import co.com.sofka.domain.generic.EventChange;
+import org.example.nomemientan.domain.ronda.events.CaseRealizadoDelJugador;
 import org.example.nomemientan.domain.ronda.events.DadosLanzados;
 import org.example.nomemientan.domain.ronda.events.EtapaCreada;
 import org.example.nomemientan.domain.ronda.events.RondaCreada;
@@ -30,6 +31,11 @@ public class RondaChange extends EventChange {
             ronda.etapas.put(event.getEtapaId(),
                     new Etapa(event.getEtapaId(), event.getCarasVisibles())
             );
+        });
+
+        apply((CaseRealizadoDelJugador event) -> {
+            ronda.etapas.get(event.getEtapaId())
+                    .aggregarCase(event.getJugadorId(), event.getCase());
         });
     }
 }

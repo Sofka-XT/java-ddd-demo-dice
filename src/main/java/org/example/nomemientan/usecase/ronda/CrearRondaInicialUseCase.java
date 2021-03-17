@@ -9,7 +9,7 @@ import org.example.nomemientan.domain.juego.values.JuegoId;
 import org.example.nomemientan.domain.ronda.values.RondaId;
 import org.example.nomemientan.domain.ronda.Ronda;
 
-public class CrearRondaInicalUseCase extends UseCase<TriggeredEvent<JuegoInicializado>, ResponseEvents> {
+public class CrearRondaInicialUseCase extends UseCase<TriggeredEvent<JuegoInicializado>, ResponseEvents> {
     @Override
     public void executeUseCase(TriggeredEvent<JuegoInicializado> input) {
         var event = input.getDomainEvent();
