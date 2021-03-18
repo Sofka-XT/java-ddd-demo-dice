@@ -6,13 +6,12 @@ import co.com.sofka.infraestructure.store.StoredEvent;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+
 public class MongoEventStoreRepository implements EventStoreRepository {
     private final MongoTemplate mongoTemplate;
 

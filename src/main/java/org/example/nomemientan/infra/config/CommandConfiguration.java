@@ -5,6 +5,8 @@ import co.com.sofka.application.ApplicationEventDrive;
 import co.com.sofka.infraestructure.asyn.SubscriberEvent;
 import co.com.sofka.infraestructure.bus.EventBus;
 import co.com.sofka.infraestructure.repository.EventStoreRepository;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import org.example.nomemientan.infra.repo.MongoEventStoreRepository;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 
 import java.net.URI;
 
@@ -53,6 +56,10 @@ public class CommandConfiguration {
     public RabbitAdmin rabbitAdmin(final ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
-
+    @Bean
+    public MongoTemplate mongoTemplate(@Value("${spring.data.uri}") String uri)  {
+        ConnectionString connectionString = new ConnectionString(uri);
+        return new MongoTemplate(new SimpleMongoClientDatabaseFactory(connectionString));
+    }
 
 }
