@@ -11,9 +11,11 @@ import org.example.nomemientan.infra.repo.MongoEventStoreRepository;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 
@@ -33,7 +35,7 @@ public class CommandConfiguration {
 
 
     @Bean
-    public EventStoreRepository eventStoreRepository(MongoTemplate mongoTemplate) {
+    public EventStoreRepository eventStoreRepository(@Qualifier("mongoTemplateCommand") MongoTemplate mongoTemplate) {
         return new MongoEventStoreRepository(mongoTemplate);
     }
 
@@ -56,8 +58,17 @@ public class CommandConfiguration {
     public RabbitAdmin rabbitAdmin(final ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
-    @Bean
-    public MongoTemplate mongoTemplate(@Value("${spring.commands.uri}") String uri)  {
+
+
+    @Bean("mongoTemplateCommand")
+    @Primary
+    public MongoTemplate mongoTemplateCommand(@Value("${spring.commands.uri}") String uri)  {
+        ConnectionString connectionString = new ConnectionString(uri);
+        return new MongoTemplate(new SimpleMongoClientDatabaseFactory(connectionString));
+    }
+
+    @Bean("mongoTemplateQueries")
+    public MongoTemplate mongoTemplateQueries(@Value("${spring.queries.uri}") String uri)  {
         ConnectionString connectionString = new ConnectionString(uri);
         return new MongoTemplate(new SimpleMongoClientDatabaseFactory(connectionString));
     }
