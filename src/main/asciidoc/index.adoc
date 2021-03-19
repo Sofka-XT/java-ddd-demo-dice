@@ -1,0 +1,27 @@
+= EXAMPLE DE DOC
+Raul A. Alzate <raul.alzate@sofka.com.co>;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:sectnums:
+
+= Intro
+En esta documentación vamos a encontrar los recursos necesarios para poder usar este componente, para consumir
+los comandos debes usar el siguiente PATH `/api/commands` en el HOST http://localhost:8080/
+
+[TIP]
+Si es posible, cree el aggregateId desde el resto del consumidor (cliente), ya que sería fácilmente accesible para consultas a través de ese id.
+Utilice UUID que garantice una identidad única.
+
+== AGGREGADO JUEGO
+
+=== CREAR JUEGO
+
+operation::nomemientas.juego.crear[snippets='request-fields,http-request']
+
+=== Domain Event
+
+- Use the topic *_nomemientas.juego.crear/[aggregateRootId]_* para obtener el evento de dominio del backend
+- Use el *_juego/[aggregateRootId]/nomemientas.juego.crear_* para obtener el eventos desde el frontend
+include::{snippets}/nomemientas.juego.crear/response-body.adoc[]

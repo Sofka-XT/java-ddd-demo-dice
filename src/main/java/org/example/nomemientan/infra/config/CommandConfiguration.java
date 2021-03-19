@@ -57,7 +57,7 @@ public class CommandConfiguration {
         return new RabbitAdmin(connectionFactory);
     }
     @Bean
-    public MongoTemplate mongoTemplate(@Value("${spring.data.uri}") String uri)  {
+    public MongoTemplate mongoTemplate(@Value("${spring.commands.uri}") String uri)  {
         ConnectionString connectionString = new ConnectionString(uri);
         return new MongoTemplate(new SimpleMongoClientDatabaseFactory(connectionString));
     }

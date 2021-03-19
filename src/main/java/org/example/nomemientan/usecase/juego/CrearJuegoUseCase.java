@@ -17,7 +17,6 @@ public class CrearJuegoUseCase extends UseCase<RequestCommand<CrearJuego>, Respo
     @Override
     public void executeUseCase(RequestCommand<CrearJuego> input) {
         var command = input.getCommand();
-        var juegoId = new JuegoId();
 
         var factory = JugadorFactory.builder();
         command.getNombres()
@@ -27,10 +26,10 @@ public class CrearJuegoUseCase extends UseCase<RequestCommand<CrearJuego>, Respo
                         ));
 
         if (factory.jugadores().size() < CATINDAD_PERMITIDA_DE_JUGADORES) {
-            throw new BusinessException(juegoId.value(), "No se puede crear el juego por que no tiene la cantidad necesaria de jugadores");
+            throw new BusinessException(command.getJuegoId().value(), "No se puede crear el juego por que no tiene la cantidad necesaria de jugadores");
         }
 
-        var juego = new Juego(juegoId, factory);
+        var juego = new Juego(command.getJuegoId(), factory);
 
         emit().onResponse(new ResponseEvents(juego.getUncommittedChanges()));
     }

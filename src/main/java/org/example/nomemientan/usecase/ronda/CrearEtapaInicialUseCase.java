@@ -1,5 +1,6 @@
 package org.example.nomemientan.usecase.ronda;
 
+import co.com.sofka.business.annotation.EventListener;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.business.support.TriggeredEvent;
@@ -7,6 +8,7 @@ import org.example.nomemientan.domain.ronda.Ronda;
 import org.example.nomemientan.domain.ronda.events.DadosLanzados;
 import org.example.nomemientan.domain.ronda.values.RondaId;
 
+@EventListener(eventType = "nomemientan.ronda.dadoslanzados")
 public class CrearEtapaInicialUseCase extends UseCase<TriggeredEvent<DadosLanzados>, ResponseEvents> {
     @Override
     public void executeUseCase(TriggeredEvent<DadosLanzados> input) {

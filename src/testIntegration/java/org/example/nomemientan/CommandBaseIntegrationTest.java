@@ -103,11 +103,7 @@ public abstract class CommandBaseIntegrationTest {
 
                     @Override
                     public OperationResponse preprocess(OperationResponse operationResponse) {
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        wait6s();
                         verify(bus, times(numEvents)).publish(eventArgumentCaptor.capture());
                         return new OperationResponseFactory().create(
                                 200,
@@ -118,5 +114,13 @@ public abstract class CommandBaseIntegrationTest {
                 }, prettyPrint()),
                 requestFieldsSnippet
         );
+    }
+
+    private void wait6s() {
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
