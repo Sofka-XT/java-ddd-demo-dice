@@ -2,6 +2,7 @@ package org.example.nomemientan.infra.handle;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import org.example.nomemientan.domain.juego.events.JuegoCreado;
+import org.example.nomemientan.domain.juego.events.JuegoInicializado;
 import org.example.nomemientan.domain.juego.events.JugadorAdicionado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,7 +39,7 @@ public class JuegoMaterialize {
 
     @Async
     @EventListener
-    public void handleEventJuegoCreado(JugadorAdicionado jugadorAdicionado) {
+    public void handleEventJugadorAdicionado(JugadorAdicionado jugadorAdicionado) {
         logger.info("****** Handle event jugadorAdicionado");
         Update update = new Update();
         var id = jugadorAdicionado.getJugadorId().value();
@@ -46,6 +47,16 @@ public class JuegoMaterialize {
         update.set("jugadores."+id+".nombre", jugadorAdicionado.getNombre().value());
 
         mongoTemplate.updateFirst(getFilterByAggregateId(jugadorAdicionado), update, COLLECTION_NAME);
+    }
+
+
+    @Async
+    @EventListener
+    public void handleEventJuegoInicializadoo(JuegoInicializado juegoInicializado) {
+        logger.info("****** Handle event juegoInicializado");
+        Update update = new Update();
+        update.set("isJuegoInicializado" , true);
+        mongoTemplate.updateFirst(getFilterByAggregateId(juegoInicializado), update, COLLECTION_NAME);
     }
 
 

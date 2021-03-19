@@ -1,5 +1,6 @@
 package org.example.nomemientan.usecase.ronda;
 
+import co.com.sofka.business.annotation.EventListener;
 import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.ResponseEvents;
@@ -9,6 +10,7 @@ import org.example.nomemientan.domain.juego.values.JuegoId;
 import org.example.nomemientan.domain.ronda.values.RondaId;
 import org.example.nomemientan.domain.ronda.Ronda;
 
+@EventListener(eventType = "nomemientan.juego.juegoinicializado")
 public class CrearRondaInicialUseCase extends UseCase<TriggeredEvent<JuegoInicializado>, ResponseEvents> {
     @Override
     public void executeUseCase(TriggeredEvent<JuegoInicializado> input) {

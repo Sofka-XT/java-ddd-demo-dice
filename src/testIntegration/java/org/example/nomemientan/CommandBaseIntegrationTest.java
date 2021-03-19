@@ -118,7 +118,7 @@ public abstract class CommandBaseIntegrationTest {
 
     private void wait6s() {
         try {
-            Thread.sleep(6000);
+            Thread.sleep(16000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
