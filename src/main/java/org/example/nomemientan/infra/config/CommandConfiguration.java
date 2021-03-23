@@ -40,7 +40,7 @@ public class CommandConfiguration {
     }
 
     @Bean
-    public ApplicationCommandExecutor applicationCommandExecutor(SubscriberEvent subscriberEvent, EventStoreRepository eventStoreRepository) {
+    public ApplicationCommandExecutor ApplicationCommandExecutor(SubscriberEvent subscriberEvent, EventStoreRepository eventStoreRepository) {
         return new ApplicationCommandExecutor(PACKAGE_USE_CASE, subscriberEvent, eventStoreRepository);
     }
 

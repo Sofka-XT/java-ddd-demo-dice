@@ -13,6 +13,8 @@ import org.example.nomemientan.domain.juego.values.Nombre;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -21,15 +23,12 @@ class CrearJuegoUseCaseTest {
 
     @Test
     void crearUnJuego() {
-        var nombres = Map.of(
-                JugadorId.of("xxxxx"), new Nombre("Raul Alzate"),
-                JugadorId.of("ffff"), new Nombre("Andres Alzate")
-        );
-        var capiltales = Map.of(
-                JugadorId.of("xxxxx"), new Capital(500),
-                JugadorId.of("ffff"), new Capital(500)
-        );
-        var command = new CrearJuego(capiltales, nombres, new JuegoId());
+        List<CrearJuego.TuplaJugador> jugadores = new ArrayList<>();
+
+        jugadores.add(new CrearJuego.TuplaJugador(new Capital(500), new Nombre("Andres Alzate"), JugadorId.of("ffff")));
+        jugadores.add(new CrearJuego.TuplaJugador(new Capital(500), new Nombre("Raul Alzate"), JugadorId.of("xxxxx")));
+
+        var command = new CrearJuego(jugadores, new JuegoId());
         var useCase = new CrearJuegoUseCase();
 
         var events = UseCaseHandler.getInstance()
@@ -56,13 +55,9 @@ class CrearJuegoUseCaseTest {
 
     @Test
     void errorAlCrearJuego() {
-        var nombres = Map.of(
-                JugadorId.of("xxxxx"), new Nombre("Raul Alzate")
-        );
-        var capiltales = Map.of(
-                JugadorId.of("xxxxx"), new Capital(500)
-        );
-        var command = new CrearJuego(capiltales, nombres, new JuegoId());
+        List<CrearJuego.TuplaJugador> jugadores = new ArrayList<>();
+        jugadores.add(new CrearJuego.TuplaJugador(new Capital(500), new Nombre("Raul Alzate"), JugadorId.of("xxxxx")));
+        var command = new CrearJuego(jugadores, new JuegoId());
         var useCase = new CrearJuegoUseCase();
 
 

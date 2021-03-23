@@ -4,6 +4,7 @@ import co.com.sofka.application.ApplicationEventDrive;
 import co.com.sofka.domain.generic.DomainEvent;
 import co.com.sofka.infraestructure.asyn.SubscriberEvent;
 import co.com.sofka.infraestructure.bus.EventBus;
+import co.com.sofka.infraestructure.handle.CommandWrapper;
 import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -68,6 +69,7 @@ public abstract class CommandBaseIntegrationTest {
     private void initRestAssured(final int localPort) {
         RestAssured.port = localPort;
         RestAssured.baseURI = "http://localhost";
+
     }
 
     protected void fireEvent(DomainEvent event, String aggregateName, String aggregateId) {
@@ -76,15 +78,15 @@ public abstract class CommandBaseIntegrationTest {
         applicationEventDrive.fire(event);
     }
 
-    protected void executor(Map<String, String> request, RequestFieldsSnippet requestFieldsSnippet, int numEvents) {
-        var commandType = request.get("commandType");
+    protected void executor(CommandWrapper request, RequestFieldsSnippet requestFieldsSnippet, int numEvents) {
+        var commandType = request.getCommandType();
         RestDocumentationFilter docs = getSpecDoc(numEvents, commandType,
                 requestFieldsSnippet
         );
         given(documentationSpec)
                 .filter(docs)
                 .contentType(ContentType.JSON)
-                .body(request)
+                .body(new Gson().toJson(request))
                 .when()
                 .post("/api/command")
                 .then()

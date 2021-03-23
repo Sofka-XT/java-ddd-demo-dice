@@ -8,6 +8,9 @@ import org.example.nomemientan.domain.juego.Juego;
 import org.example.nomemientan.domain.juego.command.CrearJuego;
 import org.example.nomemientan.domain.juego.factory.JugadorFactory;
 import org.example.nomemientan.domain.juego.values.JuegoId;
+import org.example.nomemientan.domain.juego.values.JugadorId;
+
+import java.util.function.Consumer;
 
 
 public class CrearJuegoUseCase extends UseCase<RequestCommand<CrearJuego>, ResponseEvents> {
@@ -19,11 +22,9 @@ public class CrearJuegoUseCase extends UseCase<RequestCommand<CrearJuego>, Respo
         var command = input.getCommand();
 
         var factory = JugadorFactory.builder();
-        command.getNombres()
-                .forEach((jugadorId, nombre) ->
-                        factory.nuevoJugador(
-                                jugadorId, nombre, command.getCapitales().get(jugadorId)
-                        ));
+        command.getTuplaJugadores().forEach(tuplaJugador -> factory.nuevoJugador(
+                tuplaJugador.getJugadorId(), tuplaJugador.getNombre(), tuplaJugador.getCapital()
+        ));
 
         if (factory.jugadores().size() < CATINDAD_PERMITIDA_DE_JUGADORES) {
             throw new BusinessException(command.getJuegoId().value(), "No se puede crear el juego por que no tiene la cantidad necesaria de jugadores");
