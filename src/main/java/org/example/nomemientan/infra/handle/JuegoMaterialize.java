@@ -52,6 +52,18 @@ public class JuegoMaterialize {
 
     @Async
     @EventListener
+    public void handleEventCrearJugadorAdicionado(JugadorAdicionado jugadorAdicionado) {
+        logger.info("****** Handle event jugadorAdicionado");
+        Map<String, Object> data = new HashMap<>();
+        data.put("_id", jugadorAdicionado.getJugadorId().value());
+        data.put("nombre", jugadorAdicionado.getNombre());
+
+        mongoTemplate.save(data, "jugadores");
+    }
+
+
+    @Async
+    @EventListener
     public void handleEventJuegoInicializadoo(JuegoInicializado juegoInicializado) {
         logger.info("****** Handle event juegoInicializado");
         Update update = new Update();

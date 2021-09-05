@@ -26,18 +26,25 @@ public class RabbitMQConsumer implements Flow.Subscription {
         this.eventSubscriber = eventSubscriber;
     }
 
-    @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(value = "juego.handles", durable = "true"),
-            exchange = @Exchange(value = "core-nomemientas", type = "topic"),
-            key = "nomemientan.juego.#"
-    ))
-    public void recievedMessageSlack(Message<String> message) {
+    @RabbitListener(bindings = {
+            @QueueBinding(
+                    value = @Queue(value = "juego.handles", durable = "true"),
+                    exchange = @Exchange(value = "core-nomemientas", type = "topic"),
+                    key = "nomemientan.juego.#"
+            ),
+            @QueueBinding(
+                    value = @Queue(value = "ronda.handles", durable = "true"),
+                    exchange = @Exchange(value = "core-nomemientas", type = "topic"),
+                    key = "nomemientan.ronda.#"
+            )})
+    public void recievedMessage(Message<String> message) {
         localReplay(message);
     }
 
-    private void localReplay(Message<String> peyload) {
+
+    private void localReplay(Message<String> payload) {
         try {
-            String message = peyload.getPayload();
+            String message = payload.getPayload();
             var notification = SuccessNotificationSerializer.instance().deserialize(message);
             var event = notification.deserializeEvent();
             logger.log(Level.INFO, "###### Recibe message form {0} -- {1}", new String[]{event.type, event.getClass().getName()});
@@ -50,7 +57,6 @@ public class RabbitMQConsumer implements Flow.Subscription {
             eventSubscriber.onError(e);
         }
     }
-
 
 
     @Override

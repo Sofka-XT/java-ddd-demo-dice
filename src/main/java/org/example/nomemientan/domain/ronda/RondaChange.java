@@ -1,12 +1,10 @@
 package org.example.nomemientan.domain.ronda;
 
 import co.com.sofka.domain.generic.EventChange;
-import org.example.nomemientan.domain.ronda.events.CaseRealizadoDelJugador;
-import org.example.nomemientan.domain.ronda.events.DadosLanzados;
-import org.example.nomemientan.domain.ronda.events.EtapaCreada;
-import org.example.nomemientan.domain.ronda.events.RondaCreada;
+import org.example.nomemientan.domain.ronda.events.*;
 import org.example.nomemientan.domain.ronda.values.DadoId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RondaChange extends EventChange {
@@ -16,6 +14,7 @@ public class RondaChange extends EventChange {
             ronda.dados = new HashMap<>();
             ronda.etapas = new HashMap<>();
             ronda.puntaje = new HashMap<>();
+            ronda.caras = new ArrayList<>();
             ronda.jugadorIds = event.getJugadorIds();
 
             for (var i = 1; i <= 6; i++) {//inicializar dados
@@ -24,7 +23,10 @@ public class RondaChange extends EventChange {
         });
 
         apply((DadosLanzados event) -> {
-            ronda.dados.values().forEach(Dado::lanzarDado);
+            ronda.dados.values().forEach(dado -> {
+                dado.lanzarDado();
+                ronda.caras.add(dado.caras().get(0));//selecciona la primera cara
+            });
         });
 
         apply((EtapaCreada event) -> {
@@ -36,6 +38,22 @@ public class RondaChange extends EventChange {
         apply((CaseRealizadoDelJugador event) -> {
             ronda.etapas.get(event.getEtapaId())
                     .aggregarCase(event.getJugadorId(), event.getCase());
+        });
+
+        apply((EtapaCalificada event) -> {
+            var etapa = ronda.etapas.get(event.getEtapaId());
+            etapa.calificar();
+            ronda.jugadorIds.clear();
+            ronda.jugadorIds.addAll(etapa.ganadores());
+        });
+
+        apply((RondaFinalizada event) -> {
+            ronda.juegoId = event.getJuegoId();
+            ronda.etapas.clear();
+            ronda.puntaje.clear();
+            ronda.caras.clear();
+            ronda.jugadorIds.clear();
+            ronda.dados.clear();
         });
     }
 }

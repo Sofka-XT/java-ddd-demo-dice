@@ -10,4 +10,5 @@ public class EtapaId extends Identity {
     public static EtapaId of(Integer num) {
         return new EtapaId(num);
     }
+
 }

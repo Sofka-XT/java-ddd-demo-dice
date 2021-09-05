@@ -18,7 +18,7 @@ public class SolicitarCaseDelJugadorUseCase extends UseCase<TriggeredEvent<Etapa
         var rondaId = RondaId.of(event.aggregateRootId());
 
         event.getJugadorIds().forEach(jugadorId -> {
-            var aCase = service.getCasePor(jugadorId);
+            var aCase = service.getCasePor(jugadorId, event.getCarasVisibles());
             juego.deducirCapitalDelJugador(jugadorId, aCase.value().apuesta());
             juego.casarApuestaEnEtapa(
                     jugadorId, rondaId, event.getEtapaId(), aCase

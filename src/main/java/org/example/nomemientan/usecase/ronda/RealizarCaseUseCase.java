@@ -1,11 +1,13 @@
 package org.example.nomemientan.usecase.ronda;
 
+import co.com.sofka.business.annotation.EventListener;
 import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.business.support.TriggeredEvent;
 import org.example.nomemientan.domain.juego.events.AputestaYAdivinanzaCasada;
 import org.example.nomemientan.domain.ronda.Ronda;
 
+@EventListener(eventType = "nomemientan.juego.aputestayadivinanzacasada")
 public class RealizarCaseUseCase extends UseCase<TriggeredEvent<AputestaYAdivinanzaCasada>, ResponseEvents> {
     @Override
     public void executeUseCase(TriggeredEvent<AputestaYAdivinanzaCasada> input) {

@@ -1,7 +1,6 @@
 package org.example.nomemientan;
 
 import co.com.sofka.infraestructure.handle.CommandWrapper;
-import com.google.gson.Gson;
 import org.example.nomemientan.domain.juego.command.CrearJuego;
 import org.example.nomemientan.domain.juego.command.InicializarJuego;
 import org.example.nomemientan.domain.juego.values.Capital;

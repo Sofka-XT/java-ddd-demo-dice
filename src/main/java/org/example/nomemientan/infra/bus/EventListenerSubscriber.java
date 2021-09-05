@@ -39,8 +39,8 @@ public class EventListenerSubscriber implements Flow.Subscriber<DomainEvent> {
     @Override
     public void onNext(DomainEvent event) {
         logger.log(Level.INFO, "Process event {0}", EventSerializer.instance().serialize(event));
-        applicationEventPublisher.publishEvent(event);
-        applicationEventDrive.fire(event);
+        applicationEventPublisher.publishEvent(event);//para un componente de la infra
+        applicationEventDrive.fire(event);//para los casos de uso tipo events (los que tiene la etiqueta eventListeners)
         subscription.request(1);
     }
 

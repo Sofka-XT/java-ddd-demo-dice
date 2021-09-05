@@ -1,0 +1,6 @@
+@startuml
+Frontend --> CrearJuegoHandle: Command
+CrearJuegoHandle -> CrearJuegoUseCase: Jugadores
+CrearJuegoUseCase -> Juego: Jugadores
+Juego -> CrearJuegoUseCase: JuegoCreado [JuegoId]
+@enduml

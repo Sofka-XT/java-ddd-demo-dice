@@ -1,0 +1,44 @@
+@startuml
+Frontend --> InicalizarJuegoHandle: Command
+InicalizarJuegoHandle -> InicializarJuegoUseCase: JuegoId
+InicializarJuegoUseCase -> Juego: inicializarJuego()
+Juego -> InicializarJuegoUseCase: JuegoInicializado
+InicializarJuegoUseCase --> CrearRondaUseCase: JuegoInicializado
+CrearRondaUseCase -> Ronda: Ronda()
+Ronda -> CrearRondaUseCase: RondaCreada
+Ronda -> CrearRondaUseCase: RondaInicializada
+CrearRondaUseCase --> LanzarDadoUseCase: RondaInicializada
+LanzarDadoUseCase -> Ronda: tirarDados()
+Ronda -> LanzarDadoUseCase: DadosLanzados
+LanzarDadoUseCase --> CrearEtapaInicialUseCase: DadosLanzados
+CrearEtapaInicialUseCase -> Ronda: crearEtapaInicial()
+Ronda -> CrearEtapaInicialUseCase: EtapaCreada
+CrearEtapaInicialUseCase --> SolicitarCaseDelJugadorUseCase: EtapaCreada
+    loop Solicitar apuesta por cada Jugador
+               SolicitarCaseDelJugadorUseCase -> CaseJugadorService: getCasePor(JuadorId)
+
+               CaseJugadorService->Frontend: JugadorId
+               Frontend->CaseJugadorService: Case
+
+             SolicitarCaseDelJugadorUseCase -> Juego: deducirCapitalDelJugador()
+                SolicitarCaseDelJugadorUseCase -> Juego: casarApuestaEnEtapa()
+               Juego -> SolicitarCaseDelJugadorUseCase: CapitalDeducidoDelJugador
+               Juego -> SolicitarCaseDelJugadorUseCase: AputestaYAdivinanzaCasada
+               SolicitarCaseDelJugadorUseCase --> RealizarCaseUseCase: AputestaYAdivinanzaCasada
+               RealizarCaseUseCase-> Ronda: realizarCasePorJugador()
+               Ronda->RealizarCaseUseCase: CaseRealizadoDelJugador
+               RealizarCaseUseCase-->CalificarEtapaUseCase:CaseRealizadoDelJugador
+               opt ¿Todos los jugadores han casados adivinanza?
+                   CalificarEtapaUseCase -> Ronda: calificarRonda()
+                   Ronda->CalificarEtapaUseCase: EtapaCalificada
+                   CalificarEtapaUseCase-->CrearEtapaUseCase:EtapaCalificada
+                   alt Tiene ganador
+                   CrearEtapaUseCase->Ronda: crearNuevaEtapa()
+                   Ronda->CrearEtapaUseCase:EtapaCreada
+                   else No tiene ganador
+                   CrearEtapaUseCase->Ronda: finalizarRonda()
+                   Ronda->CrearEtapaUseCase:RondaFinalizada
+                   end
+               end
+    end
+@enduml

@@ -17,7 +17,7 @@ public class CrearJuegoHandle extends UseCaseCommandExecutor<CrearJuego> {
 
     @Override
     public void accept(CrearJuego command) {
-       //validation
+       //validation sync
     }
 
     @Override
